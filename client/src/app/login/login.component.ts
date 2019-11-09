@@ -23,6 +23,8 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
   }
 
+  get f() { return this.loginForm.controls; }
+
   onSubmit() {
     this.submitted = true;
 
