@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {UserService} from '../service/user.service';
+import {first} from 'rxjs/operators';
 
 @Component({ templateUrl: 'register.component.html' })
 export class RegisterComponent implements OnInit {
@@ -11,6 +13,7 @@ export class RegisterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
+    private userService: UserService,
   ) {}
 
   ngOnInit() {
@@ -31,6 +34,14 @@ export class RegisterComponent implements OnInit {
       return;
     }
     this.loading = true; // Loading symbol in button when fetching data
-    this.router.navigate(['/login']);
+    this.userService.register(this.registerForm.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.router.navigate(['/login']);
+        },
+        error => {
+          this.loading = false;
+        });
   }
 }

@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AuthenticationService} from '../service/authentication.service';
+import {first} from 'rxjs/operators';
 
-@Component({ templateUrl: 'login.component.html' })
+@Component({templateUrl: 'login.component.html'})
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
@@ -13,17 +15,24 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-  ) {}
+    private authenticationService: AuthenticationService,
+  ) {
+    // redirect to home if already logged in
+    if (this.authenticationService.currentUserValue) {
+      this.router.navigate(['/home']);
+    }
+  }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required]
     });
-    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
   }
 
-  get f() { return this.loginForm.controls; }
+  get f() {
+    return this.loginForm.controls;
+  }
 
   onSubmit() {
     this.submitted = true;
@@ -32,6 +41,14 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.loading = true; // Loading symbol in button when fetching data
-    this.router.navigate([this.returnUrl]);
+    this.authenticationService.login(this.f.email.value, this.f.password.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.router.navigate(['/home']);
+        },
+        error => {
+          this.loading = false;
+        });
   }
 }

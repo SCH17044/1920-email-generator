@@ -6,21 +6,44 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Id;
-
+/**
+ * Any Information belonging to User is stored here (Authentication mainly)
+ */
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserDto {
 
-    @Id
+    /**
+     * Identifier for later purposes (Email-generator-favorites).
+     */
     private String id;
-    private String firstName;
-    private String lastName;
+
+    /**
+     * The Email identifies the User and can not be null.
+     */
     private String email;
+
+    /**
+     * The Password identifies the User and can not be null.
+     */
     private String password;
+
+    /**
+     * Session token will be used later.
+     */
     private String token;
 
+    /**
+     * User Data for later Email-Generation.
+     */
+    private String firstName;
+    private String lastName;
+
+    /**
+     * Used for custom mapping processes
+     * @param user User mapped to UserDto
+     */
     public UserDto (User user){
         this.id = user.getId();
         this.firstName = user.getFirstName();
