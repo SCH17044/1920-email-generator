@@ -1,0 +1,55 @@
+package at.spengergasse.nvs.server.service;
+
+import at.spengergasse.nvs.server.dto.TemplateDto;
+import at.spengergasse.nvs.server.model.Template;
+import at.spengergasse.nvs.server.model.User;
+import at.spengergasse.nvs.server.persistence.TemplateRepository;
+import at.spengergasse.nvs.server.persistence.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service
+@Transactional
+@RequiredArgsConstructor(onConstructor_ = {@Autowired})
+public class TemplateService {
+
+    private final TemplateRepository templateRepository;
+    private final UserRepository userRepository;
+
+    public List<TemplateDto> findAllTemplates() {
+        return templateRepository
+                .findAll()
+                .stream()
+                .map(TemplateDto::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<TemplateDto> findAllByUserIdentifier(String identifier) {
+        return templateRepository.findByUserIdentifier(identifier)
+                        .stream()
+                        .map(TemplateDto::new)
+                        .collect(Collectors.toList());
+    }
+
+    public Optional<TemplateDto> saveTemplate(TemplateDto templateDto, String identifier) {
+        User user = userRepository.findByIdentifier(identifier);
+        Template template = Optional.of(templateDto).map(Template::new).get();
+        template.setUser(user);
+        return Optional.of(templateRepository.save(template)).map(TemplateDto::new);
+    }
+
+    public Optional<TemplateDto> findByTemplateId(String id) {
+        return templateRepository.findByIdentifier(id).map(TemplateDto::new);
+    }
+
+    public void deleteByTemplateId(String id) {
+        templateRepository.deleteByIdentifier(id);
+    }
+
+}
