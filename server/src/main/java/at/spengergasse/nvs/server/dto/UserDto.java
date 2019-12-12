@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.hateoas.ResourceSupport;
 
 /**
  * Any Information belonging to User is stored here (Authentication mainly)
@@ -12,12 +13,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class UserDto {
+public class UserDto extends ResourceSupport {
 
     /**
      * Identifier for later purposes (Email-generator-favorites).
      */
-    private String id;
+    private String identifier;
 
     /**
      * The Email identifies the User and can not be null.
@@ -45,7 +46,7 @@ public class UserDto {
      * @param user User mapped to UserDto
      */
     public UserDto (User user){
-        this.id = user.getId();
+        this.identifier = user.getIdentifier();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.email = user.getEmail();
