@@ -55,16 +55,16 @@ public class UserService {
      * @param userDto login Input of the User
      * @return true when authentication was successful otherwise return false
      */
-    public boolean loginUser(UserDto userDto){
+    public User loginUser(UserDto userDto){
         User loginUser =  Optional.of(userDto).map(User::new).get();
         User checkUser = userRepository.findByEmail(loginUser.getEmail());
         if(checkUser == null){
             throw new UsernameNotFoundException("Invalid Username or password!");
         }
-        return passwordEncoder.
-                matches(
-                        loginUser.getPassword(),
-                        checkUser.getPassword());
+        if(passwordEncoder.matches(loginUser.getPassword(), checkUser.getPassword())){
+            return checkUser;
+        };
+        return null;
     }
 
     /**

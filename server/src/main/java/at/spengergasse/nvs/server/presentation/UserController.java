@@ -1,6 +1,7 @@
 package at.spengergasse.nvs.server.presentation;
 
 import at.spengergasse.nvs.server.dto.UserDto;
+import at.spengergasse.nvs.server.model.User;
 import at.spengergasse.nvs.server.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,11 +52,12 @@ public class UserController {
      * @return returns the response if the login was successful or not (Unauthorized)
      */
     @PostMapping("/login")
-    public ResponseEntity authenticateUser(@RequestBody UserDto userDto){
-        boolean authenticated = userService.loginUser(userDto);
-        HttpStatus httpStatus = authenticated ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
-        return ResponseEntity.status(httpStatus).build();
-
+    public ResponseEntity<User> authenticateUser(@RequestBody UserDto userDto){
+        User user = userService.loginUser(userDto);
+        HttpStatus httpStatus =  user != null ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
+        return ResponseEntity
+                .status(httpStatus)
+                .body(user);
     }
 
 }

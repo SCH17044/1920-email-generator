@@ -8,6 +8,9 @@ import {RegisterComponent} from './register/register.component';
 import {HomeComponent} from './home/home.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import {MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSortModule, MatTableModule} from '@angular/material';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {CdkTableModule} from '@angular/cdk/table';
 
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -28,9 +31,19 @@ const appRoutes: Routes = [
     BrowserModule,
     RouterModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatFormFieldModule,
+    MatTableModule,
+    MatInputModule,
+    BrowserAnimationsModule,
+    BrowserAnimationsModule,
+    CdkTableModule,
+    MatSortModule,
+    MatIconModule,
+    MatButtonModule,
   ],
   providers: [],
+  exports: [RouterModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

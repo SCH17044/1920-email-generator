@@ -27,7 +27,7 @@ public class User {
      * Identifier for later purposes (Email-generator-favorites).
      */
     @Id
-    private String id;
+    private String identifier;
 
     /**
      * The Email identifies the User and can not be null.
@@ -61,10 +61,10 @@ public class User {
      * @param userDto userDto mapped to User
      */
     public User (UserDto userDto){
-        this.id = Optional.ofNullable(userDto.getId()).orElse(UUID.randomUUID().toString());
+        this.identifier = Optional.ofNullable(userDto.getIdentifier()).orElse(UUID.randomUUID().toString());
         this.firstName = userDto.getFirstName();
         this.lastName = userDto.getLastName();
-        this.email = userDto.getEmail();
+        this.email = userDto.getEmail().toLowerCase();
         this.password = userDto.getPassword();
         this.token = userDto.getToken();
     }
