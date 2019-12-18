@@ -2,27 +2,24 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {TemplateService} from '../service/template.service';
 import {User} from '../model/user';
 import {AuthenticationService} from '../service/authentication.service';
-import {UserService} from '../service/user.service';
 import {Router} from '@angular/router';
 import {MatTableDataSource} from '@angular/material/table';
 import {Subscription} from 'rxjs';
 import {MatSort} from '@angular/material';
-import {Template} from '../model/template';
 
 @Component({templateUrl: './home.component.html',
             styleUrls: ['./home.component.scss']})
 export class HomeComponent implements OnDestroy, OnInit {
   currentUser: User;
   subscription: Subscription;
-  displayedColumns: string[] = ['mailto', 'subject', 'cc', 'edit', 'delete'];
+  displayedColumns: string[] = ['name', 'mailto', 'subject', 'cc', 'edit', 'delete'];
   dataSource = new MatTableDataSource();
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private templateService: TemplateService,
               private authenticationService: AuthenticationService,
-              private router: Router,
-              private userService: UserService) {
+              private router: Router) {
     this.currentUser = this.authenticationService.currentUserValue;
     // redirect to home if already logged in
     if (!this.currentUser) {
