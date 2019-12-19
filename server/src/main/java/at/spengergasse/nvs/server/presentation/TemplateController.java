@@ -63,12 +63,8 @@ public class TemplateController {
      * @return a Response entity
      */
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable String id) {
-
+    public void deleteById(@PathVariable String id) {
         templateService.deleteByTemplateId(id);
-
-        return ResponseEntity.ok()
-                .build();
     }
 
 }

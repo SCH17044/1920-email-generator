@@ -2,8 +2,11 @@ package at.spengergasse.nvs.server.model;
 
 import at.spengergasse.nvs.server.dto.UserDto;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -27,6 +30,9 @@ public class User {
      * Identifier for later purposes (Email-generator-favorites).
      */
     @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Column(name = "user_id")
     private String identifier;
 
     /**
@@ -61,7 +67,7 @@ public class User {
      * @param userDto userDto mapped to User
      */
     public User (UserDto userDto){
-        this.identifier = Optional.ofNullable(userDto.getIdentifier()).orElse(UUID.randomUUID().toString());
+        this.identifier = userDto.getIdentifier();
         this.firstName = userDto.getFirstName();
         this.lastName = userDto.getLastName();
         this.email = userDto.getEmail().toLowerCase();

@@ -2,11 +2,10 @@ package at.spengergasse.nvs.server.model;
 
 import at.spengergasse.nvs.server.dto.TemplateDto;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,11 +19,15 @@ import java.util.UUID;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Template extends AbstractPersistable<Long> {
+public class Template {
 
     /**
      * Identifier of the object.
      */
+    @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Column(name = "template_id")
     private String identifier;
 
     /**
@@ -36,7 +39,6 @@ public class Template extends AbstractPersistable<Long> {
     /**
      * Information needed for the Template creation and convenience.
      */
-    private String category;
     private String name;
     private String mailto;
     private String cc;
@@ -48,8 +50,7 @@ public class Template extends AbstractPersistable<Long> {
      * @param templateDto templateDto mapped to Template
      */
     public Template(TemplateDto templateDto) {
-        this.identifier = Optional.ofNullable(templateDto.getIdentifier()).orElse(UUID.randomUUID().toString());
-        this.category = templateDto.getCategory();
+        this.identifier = templateDto.getIdentifier();
         this.name = templateDto.getName();
         this.mailto = templateDto.getMailto();
         this.cc = templateDto.getCc();

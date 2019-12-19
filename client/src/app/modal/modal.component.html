@@ -1,0 +1,54 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+  <form [formGroup]="modalForm">
+    <mat-form-field>
+      <label>
+        <input formControlName="name" matInput [placeholder]="f.name.errors && submitted? 'Der Vorlagename fehlt!' : 'Vorlagenname'">
+      </label>
+    </mat-form-field>
+    <mat-form-field>
+      <label>
+        <input readonly="true" matInput [value]="data.currentUser.email">
+      </label>
+    </mat-form-field>
+
+    <mat-form-field>
+      <label>
+        <input formControlName="mailto" matInput  [placeholder]="f.mailto.errors && submitted? 'Die Eingabe für An fehlt oder ist ungültig!' : 'An'" >
+      </label>
+    </mat-form-field>
+
+    <mat-form-field>
+      <label>
+        <input formControlName="cc" matInput [placeholder]="f.cc.errors && submitted? 'Die Eingabe für den CC ist ungültig!' : 'CC'">
+      </label>
+    </mat-form-field>
+
+    <mat-form-field>
+      <label>
+        <input formControlName="subject" matInput [placeholder]="'Betreff'">
+      </label>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Emailinhalt</mat-label>
+      <label>
+      <textarea
+        matInput
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="5"
+        cdkAutosizeMaxRows="10" [placeholder]="'Lieber...'" formControlName="body">
+      </textarea>
+      </label>
+      <mat-hint>total words: {{this.modalForm.value.body.split('/\w+/').length -1}}</mat-hint>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onCancel()">Abbrechen</button>
+  <button mat-raised-button (click)="onCreate()" [disabled]="loading">
+    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+    Erstellen / Editieren
+  </button>
+</div>

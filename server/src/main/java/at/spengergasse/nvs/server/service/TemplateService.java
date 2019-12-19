@@ -70,7 +70,7 @@ public class TemplateService {
      * @param id of the Template
      */
     public void deleteByTemplateId(String id) {
-        templateRepository.deleteByIdentifier(id);
+        templateRepository.findByIdentifier(id).ifPresent(templateRepository::delete);
     }
 
 }

@@ -25,10 +25,4 @@ public interface TemplateRepository extends JpaRepository<Template, Long> {
      */
     List<Template> findByUserIdentifier(String identifier);
 
-    /**
-     * Deletes the Template by id
-     * @param id of the template
-     */
-    void deleteByIdentifier(String id);
-
 }

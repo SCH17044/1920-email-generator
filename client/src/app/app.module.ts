@@ -6,11 +6,20 @@ import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
 import {HomeComponent} from './home/home.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSortModule, MatTableModule} from '@angular/material';
+import {
+  MatButtonModule,
+  MatDialogModule,
+  MatFormFieldModule, MatGridListModule,
+  MatIconModule,
+  MatInputModule, MatListModule,
+  MatSortModule,
+  MatTableModule
+} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CdkTableModule} from '@angular/cdk/table';
+import {ModalComponent} from './modal/modal.component';
 
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -25,6 +34,7 @@ const appRoutes: Routes = [
     LoginComponent,
     RegisterComponent,
     HomeComponent,
+    ModalComponent,
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -41,9 +51,14 @@ const appRoutes: Routes = [
     MatSortModule,
     MatIconModule,
     MatButtonModule,
+    MatDialogModule,
+    FormsModule,
+    MatGridListModule,
+    MatListModule,
   ],
   providers: [],
   exports: [RouterModule],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ModalComponent]
 })
 export class AppModule { }

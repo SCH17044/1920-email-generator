@@ -1,6 +1,7 @@
 package at.spengergasse.nvs.server.dto;
 
 import at.spengergasse.nvs.server.model.Template;
+import at.spengergasse.nvs.server.model.User;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,6 @@ public class TemplateDto extends ResourceSupport {
     /**
      * Information needed for the Template creation and convenience.
      */
-    private String category;
     private String name;
     private String mailto;
     private String cc;
@@ -37,7 +37,6 @@ public class TemplateDto extends ResourceSupport {
     public TemplateDto (Template template){
         this.identifier = template.getIdentifier();
         this.name = template.getName();
-        this.category = template.getCategory();
         this.mailto = template.getMailto();
         this.cc = template.getCc();
         this.subject = template.getSubject();
