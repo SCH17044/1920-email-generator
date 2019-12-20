@@ -20,6 +20,7 @@ import {
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CdkTableModule} from '@angular/cdk/table';
 import {ModalComponent} from './modal/modal.component';
+import {AlertComponent} from './alert/alert.component';
 
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -35,6 +36,7 @@ const appRoutes: Routes = [
     RegisterComponent,
     HomeComponent,
     ModalComponent,
+    AlertComponent,
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

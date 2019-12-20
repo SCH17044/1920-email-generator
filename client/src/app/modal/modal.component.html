@@ -26,6 +26,12 @@
 
     <mat-form-field>
       <label>
+        <input formControlName="bcc" matInput [placeholder]="f.bcc.errors && submitted? 'Die Eingabe für den BCC ist ungültig!' : 'BCC'">
+      </label>
+    </mat-form-field>
+
+    <mat-form-field>
+      <label>
         <input formControlName="subject" matInput [placeholder]="'Betreff'">
       </label>
     </mat-form-field>
@@ -49,6 +55,6 @@
   <button mat-raised-button (click)="onCancel()">Abbrechen</button>
   <button mat-raised-button (click)="onCreate()" [disabled]="loading">
     <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-    Erstellen / Editieren
+    {{data.title === 'Template editieren:'? 'Editieren' : 'Erstellen'}}
   </button>
 </div>

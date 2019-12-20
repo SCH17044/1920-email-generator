@@ -9,13 +9,14 @@ import {MatDialog, MatSort} from '@angular/material';
 import {ModalComponent} from '../modal/modal.component';
 import {Template} from '../model/template';
 
-@Component({templateUrl: './home.component.html',
-            styleUrls: ['./home.component.scss']})
+@Component({
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
+})
 export class HomeComponent implements OnDestroy, OnInit {
   currentUser: User;
   subscription: Subscription;
-  deleteSubscription: Subscription;
-  displayedColumns: string[] = ['name', 'mailto', 'subject', 'cc', 'edit', 'delete'];
+  displayedColumns: string[] = ['name', 'mailto', 'subject', 'cc', 'bcc', 'generate', 'edit', 'delete'];
   dataSource = new MatTableDataSource();
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -38,7 +39,6 @@ export class HomeComponent implements OnDestroy, OnInit {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-    this.deleteSubscription.unsubscribe();
   }
 
   loadData() {
@@ -52,7 +52,7 @@ export class HomeComponent implements OnDestroy, OnInit {
   }
 
   new() {
-    this.openDialog('Neues Template erstellen:',  new Template());
+    this.openDialog('Neues Template erstellen:', new Template());
   }
 
   edit(element) {
@@ -60,7 +60,9 @@ export class HomeComponent implements OnDestroy, OnInit {
   }
 
   delete(element) {
-    this.deleteSubscription = this.templateService.deleteTemplate(element.identifier).subscribe();
+    this.templateService.deleteTemplate(element.identifier).subscribe(result => {
+      this.loadData();
+    });
   }
 
   openDialog(title: string, template: Template) {
@@ -72,8 +74,20 @@ export class HomeComponent implements OnDestroy, OnInit {
       panelClass: 'custom-dialog-container'
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result) { this.loadData(); }
+      if (result) {
+        this.loadData();
+      }
     });
+  }
+
+  openMail(template: Template) {
+    const mail = document.createElement('a');
+    mail.href = 'mailto:' + template.mailto +
+      '?cc=' + template.cc +
+      '&bcc=' + template.bcc +
+      '&subject=' + template.subject +
+      '&body=' + template.body.replace(/(?:\r\n|\r|\n)/g, '%0a');
+    mail.click();
   }
 }
 

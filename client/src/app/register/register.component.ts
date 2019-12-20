@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {UserService} from '../service/user.service';
 import {first} from 'rxjs/operators';
 import {AuthenticationService} from '../service/authentication.service';
+import {AlertService} from '../service/alter.service';
 
 @Component({ templateUrl: 'register.component.html' })
 export class RegisterComponent implements OnInit {
@@ -15,6 +16,7 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private userService: UserService,
+    private alertService: AlertService,
     private authenticationService: AuthenticationService
   ) {
     if (this.authenticationService.currentUserValue) {
@@ -34,7 +36,8 @@ export class RegisterComponent implements OnInit {
   get f() { return this.registerForm.controls; }
 
   onSubmit() {
-    this.submitted = true;
+    this.submitted = true; // sets the Validators in Action
+    this.alertService.clear(); // reset alerts on submit
 
     if (this.registerForm.invalid) {
       return;
@@ -44,9 +47,11 @@ export class RegisterComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
+          this.alertService.success('Registrierung erfolgreich!', true);
           this.router.navigate(['/login']);
         },
         error => {
+          this.alertService.error('Diese E-Mail Adresse ist leider schon vorhanden!');
           this.loading = false;
         });
   }

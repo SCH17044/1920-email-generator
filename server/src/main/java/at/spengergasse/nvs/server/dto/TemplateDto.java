@@ -1,7 +1,6 @@
 package at.spengergasse.nvs.server.dto;
 
 import at.spengergasse.nvs.server.model.Template;
-import at.spengergasse.nvs.server.model.User;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +25,7 @@ public class TemplateDto extends ResourceSupport {
      */
     private String name;
     private String mailto;
+    private String bcc;
     private String cc;
     private String subject;
     private String body;
@@ -39,6 +39,7 @@ public class TemplateDto extends ResourceSupport {
         this.name = template.getName();
         this.mailto = template.getMailto();
         this.cc = template.getCc();
+        this.bcc = template.getBcc();
         this.subject = template.getSubject();
         this.body = template.getBody();
     }

@@ -23,12 +23,13 @@ export class ModalComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: {title: string, template: Template, currentUser: User}) {}
 
   ngOnInit(): void {
-    this.data.template.body = '';
+    if (!this.data.template.body) { this.data.template.body = ''; }
     this.modalForm = this.formBuilder.group({
       identifier: [this.data.template.identifier],
       name: [this.data.template.name, Validators.required],
       mailto: [this.data.template.mailto, [Validators.required, Validators.email]],
       cc: [this.data.template.cc,  Validators.email],
+      bcc: [this.data.template.bcc,  Validators.email],
       subject: [this.data.template.subject],
       body: [this.data.template.body],
     });
@@ -48,7 +49,7 @@ export class ModalComponent implements OnInit {
     }
 
     this.loading = true; // Loading symbol in button when fetching data
-    console.log(this.modalForm.value);
+    console.log(this.modalForm.value.body);
     this.templateService.createOrUpdateTemplate(this.data.currentUser.identifier, this.modalForm.value)
       .pipe(first())
       .subscribe(

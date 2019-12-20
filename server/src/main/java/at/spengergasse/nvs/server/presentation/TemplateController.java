@@ -60,7 +60,6 @@ public class TemplateController {
     /**
      * Deletes the Template with the given id
      * @param id of the template
-     * @return a Response entity
      */
     @DeleteMapping(path = "/{id}")
     public void deleteById(@PathVariable String id) {

@@ -3,18 +3,19 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../service/authentication.service';
 import {first} from 'rxjs/operators';
+import {AlertService} from '../service/alter.service';
 
 @Component({templateUrl: 'login.component.html'})
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
   submitted = false;
-  returnUrl: string;
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
+    private alertService: AlertService,
     private authenticationService: AuthenticationService,
   ) {
     // redirect to home if already logged in
@@ -35,7 +36,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
+    this.submitted = true; // sets the Validators in Action
+    this.alertService.clear(); // reset alerts on submit
 
     if (this.loginForm.invalid) {
       return;
@@ -48,6 +50,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/home']);
         },
         error => {
+          this.alertService.error('Falsche E-Mail Adresse oder Passwort!');
           this.loading = false;
         });
   }

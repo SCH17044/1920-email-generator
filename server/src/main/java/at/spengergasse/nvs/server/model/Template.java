@@ -3,11 +3,8 @@ package at.spengergasse.nvs.server.model;
 import at.spengergasse.nvs.server.dto.TemplateDto;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
-import java.util.Optional;
-import java.util.UUID;
 
 /**
  * Any Information belonging to Template is stored here
@@ -42,6 +39,7 @@ public class Template {
     private String name;
     private String mailto;
     private String cc;
+    private String bcc;
     private String subject;
     private String body;
 
@@ -54,6 +52,7 @@ public class Template {
         this.name = templateDto.getName();
         this.mailto = templateDto.getMailto();
         this.cc = templateDto.getCc();
+        this.bcc = templateDto.getBcc();
         this.subject = templateDto.getSubject();
         this.body = templateDto.getBody();
     }

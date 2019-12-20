@@ -31,7 +31,7 @@ export class TemplateService {
   }
 
   deleteTemplate(templateId: string) {
-    return this.http.delete(`http://localhost:8080/templates/${templateId}`, httpOptions);
+    return this.http.delete(`http://localhost:8080/templates/${templateId}`);
   }
 }
 

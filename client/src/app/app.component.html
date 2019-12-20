@@ -1,7 +1,17 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
   <div class="navbar-nav">
     <a class="nav-item nav-link" routerLink="/">{{currentUser.email}}</a>
-    <a class="nav-item nav-link" routerLink="/login" (click)="logout()">Logout</a>
+    <a class="nav-item nav-link" routerLink="/login" (click)="logout()">Abmelden</a>
   </div>
 </nav>
-<router-outlet></router-outlet>
+
+<div [ngClass]="{'jumbotron': !currentUser}">
+  <div [ngClass]="{'container': !currentUser}">
+    <div [ngClass]="{'row': !currentUser}">
+      <div [ngClass]="{'col-sm-6 offset-sm-3': !currentUser}">
+        <app-alert></app-alert>
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>
