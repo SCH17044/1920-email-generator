@@ -82,10 +82,10 @@ export class HomeComponent implements OnDestroy, OnInit {
 
   openMail(template: Template) {
     const mail = document.createElement('a');
-    mail.href = 'mailto:' + template.mailto +
-      '?cc=' + template.cc +
-      '&bcc=' + template.bcc +
-      '&subject=' + template.subject +
+    mail.href = 'mailto:' + (template.mailto ? template.mailto : ' ') +
+      '?cc=' + (template.cc ? template.cc : ' ') +
+      '&bcc=' + (template.bcc ? template.bcc : ' ') +
+      '&subject=' + (template.subject ? template.subject : ' ') +
       '&body=' + template.body.replace(/(?:\r\n|\r|\n)/g, '%0a');
     mail.click();
   }

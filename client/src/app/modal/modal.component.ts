@@ -60,4 +60,9 @@ export class ModalComponent implements OnInit {
           this.loading = false;
         });
   }
+
+  countOf(text) {
+    const s = text ? text.split(/\w+/) : 0; // it splits the text on space/tab/enter
+    return s ? s.length - 1 : 0;
+  }
 }

@@ -47,7 +47,7 @@
         cdkAutosizeMaxRows="10" [placeholder]="'Lieber...'" formControlName="body">
       </textarea>
       </label>
-      <mat-hint>total words: {{this.modalForm.value.body.split('/\w+/').length -1}}</mat-hint>
+      <mat-hint>total words: {{countOf(this.modalForm.value.body)}}</mat-hint>
     </mat-form-field>
   </form>
 </div>
